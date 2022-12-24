@@ -1,20 +1,22 @@
-import mongoose from 'mongoose';
-import { PORT, MONGODB } from './constants';
+import mongoose from "mongoose";
+import { PORT } from "./constants";
 
-import * as serverService from './services/server.service';
+import * as serverService from "./services/server.service";
 
 (async () => {
   try {
-    await mongoose.connect(process.env.MONGO_CONNECTION_STRING || MONGODB);
+    await mongoose.connect(
+      "mongodb+srv://pmauser:XkcmiUJQih6vCsqw@cluster0.jyk4u0z.mongodb.net/?retryWrites=true&w=majority"
+    );
     serverService.server.listen(process.env.PORT || PORT, function () {
-      console.log('Сервер ожидает подключения...');
-    })
+      console.log("Сервер ожидает подключения...");
+    });
   } catch (error) {
     console.log(error);
   }
 })();
 
-process.on('SIGINT', async () => {
+process.on("SIGINT", async () => {
   await mongoose.disconnect();
   process.exit();
 });
